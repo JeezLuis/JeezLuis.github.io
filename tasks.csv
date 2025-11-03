@@ -1,9 +1,45 @@
-user,task
-alice,Buy groceries
-alice,Call Bob
-alice,Finish report
-bob,Review PRs
-bob,Update documentation
-carol,Plan meeting
-carol,Send invoices
-carol,Book flights
+Lluís Farré ,3.7. Abrazos,6.1. Hacer foto,9.1. Coord. Perdón,,,
+Gemma Vila,3.7. Abrazos,7.1. Coord. Máscaras,,,,
+Maria Lopez ,3.4. T.Sala - Cuerda,10.3. Capilla / Confesionarios,13.3. Camarero Mesa 3,14.16. Oración Domingo,,
+Natalia  Casas ,3.6. Cuerda 2,3.8. T.Cuerda - Fogata,11.5. Cartas,13.4. Camarero Mesa 4,,
+Mireia Sitjà ,3.4. T.Sala - Cuerda,7.3. Máscaras,11.6. T-Cartas / Agape,14.1. Campanilla,,
+Blanca Gimeno ,7.2. Lector,11.1. Nexo,14.11. Sanando mi alma,14.13. Carta de Jesús,,
+Gianna  Negrete,9.4. Novia / Mujer,10.2. Blinds,11.4. T-Conf / Cartas,12.3. Animar Ágape,,
+Yaleisi Garcia ,3.2. Lector,5.1. Desp. Chicas,10.4. T-Cap / Muro,10.5. Vigilantes + Atar,11.2. T-Muro / Conf,
+Gabi Prats ,1.5. Maletero,3.3. Blinds,3.8. T.Cuerda - Fogata,11.4. T-Conf / Cartas,,
+Belén  Ferreira ,1.6. Snacks Bienvenida,2.1. Montaje,4.1. Snacks Hoguera,5.1. Desp. Chicas,12.2. Preparar Ágape,
+Maria Florencia  Donnelly ,1.6. Snacks Bienvenida,3.3. Blinds,12.2. Preparar Ágape,14.15. Oración Inicio Sábado,,
+Alejandra Gallart ,1.2. Entrada Mesa 1,3.8. T.Cuerda - Fogata,10.2. Blinds,11.6. T-Cartas / Agape,,
+Marina Hernández ,10.2. Blinds,10.4. T-Cap / Muro,10.5. Vigilantes + Atar,11.2. T-Muro / Conf,14.8. Santísimo,
+Jordi Sirvent ,1.7. Parking,3.6. Cuerda 2,5.2. Desp. Chicos,7.3. Máscaras,11.6. T-Cartas / Agape,13.7. Camarero Mesa 7
+Jose Parcerisa,4.2. Animar Hoguera,6.1. Hacer foto,11.7. Lector,14.6. Palanquitas,14.14. Historia Gabo,
+Carmen Koerts,1.3. Entrada Mesa 2,3.3. Blinds,4.1. Snacks Hoguera,12.2. Preparar Ágape,,
+Sergio  Navarro ,1.6. Snacks Bienvenida,2.1. Montaje,4.1. Snacks Hoguera,5.2. Desp. Chicos,12.2. Preparar Ágape,
+Jana Xicola ,3.8. T.Cuerda - Fogata,10.3. Capilla / Confesionarios,13.2. Camarero Mesa 2,14.11. Sanando mi alma,,
+María Jesús Rodríguez ,11.1. Nexo,14.2. Asignación mesas,14.7. Cantar Orando,,,
+Nuria Dot,1.4. Logistica mesas,2.1. Montaje,10.1. Responsables,,,
+Eduardo Ochoa,1.6. Snacks Bienvenida,4.1. Snacks Hoguera,12.1. Responsable,,,
+Camilo Arévalo ,3.3. Blinds,3.8. T.Cuerda - Fogata,9.3. Novio / Marido,11.6. T-Cartas / Agape,,
+Marta Gallego ,1.6. Snacks Bienvenida,4.1. Snacks Hoguera,12.1. Responsable,,,
+Gabriela  Fierro ,1.5. Maletero,10.4. T-Cap / Muro,10.5. Vigilantes + Atar,11.2. T-Muro / Conf,14.13. Carta de Jesús,
+Josep Martorell ,,,,,,
+Piero Jo ,3.4. T.Sala - Cuerda,7.3. Máscaras,15.1. Bendición Cena Viernes,15.2. Bendición Desayuno Sábado,15.3. Bendición Comida Sábado,
+Laura Muñoz ,1.1. Recibimiento,4.2. Animar Hoguera,10.2. Blinds,10.6. Rezadores,,
+Abel Miralles ,1.5. Maletero,5.2. Desp. Chicos,8.1. Atención Sacerdotes,9.7. Amigo,13.6. Camarero Mesa 6,
+Javier  Vicén ,1.5. Maletero,10.4. T-Cap / Muro,10.5. Vigilantes + Atar,11.2. T-Muro / Conf,,
+Lita Mogollon,3.5. Cuerda 1,8.1. Atención Sacerdotes,14.10. Confidencialidad,14.18. Resumen Sábado,,
+Maria Paula Urdaniz ,3.3. Blinds,4.1. Snacks Hoguera,12.2. Preparar Ágape,14.5. Diario,,
+Victor Garrido ,2.1. Montaje,10.2. Blinds,10.6. Rezadores,,,
+Ramon Lasierra,2.2. Hoguera,5.2. Desp. Chicos,13.1. Camarero Mesa 1,,,
+Elena Hernando,3.5. Cuerda 1,9.6. Hermana,11.5. Cartas,14.12. Biblias,,
+Alejandro José  Perdomo ,1.2. Entrada Mesa 1,9.5. Hermano,10.2. Blinds,10.6. Rezadores,,
+Mariana  Rico ,A.1. Conductores,1.1. Recibimiento,7.3. Máscaras,12.2. Preparar Ágape,12.3. Animar Ágape,
+Jordi Busquets ,3.5. Cuerda 1,7.3. Máscaras,10.4. T-Cap / Muro,10.5. Vigilantes + Atar,11.2. T-Muro / Conf,
+Josep Ramón ,2.2. Hoguera,3.4. T.Sala - Cuerda,7.3. Máscaras,10.4. T-Cap / Muro,10.5. Vigilantes + Atar,11.2. T-Muro / Conf
+Tomas Alisio,1.3. Entrada Mesa 2,3.4. T.Sala - Cuerda,10.2. Blinds,11.4. T-Conf / Cartas,,
+Clara Navarro ,7.3. Máscaras,10.4. T-Cap / Muro,10.5. Vigilantes + Atar,11.2. T-Muro / Conf,14.3. Texto Effeta,
+Maria Alejandra  Garay,3.6. Cuerda 2,5.1. Desp. Chicas,7.3. Máscaras,11.6. T-Cartas / Agape,13.5. Camarero Mesa 5,
+Gabriel Rodriguez ,1.5. Maletero,4.1. Snacks Hoguera,12.2. Preparar Ágape,14.1. Campanilla,,
+Marta Arranz ,A.1. Conductores,5.1. Desp. Chicas,9.2. Amiga,12.2. Preparar Ágape,14.4. Luz,
+Maria Miñana ,1.4. Logistica mesas,3.1. Responsable de la Sala,10.1. Responsables,11.6. T-Cartas / Agape,,
+Jorge Ignacio  Cerrutti ,2.2. Hoguera,3.3. Blinds,11.4. T-Conf / Cartas,14.17. Resumen Viernes,,

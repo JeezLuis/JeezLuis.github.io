@@ -8,19 +8,29 @@ async function loadCSV(url) {
 function parseCSV(text) {
     const lines = text.trim().split(/\r?\n/);
     if (lines.length === 0) return [];
+
     const header = lines[0].split(',').map(h => h.trim().toLowerCase());
-    const userIdx = header.indexOf('user');
-    const taskIdx = header.indexOf('task');
-    if (userIdx === -1 || taskIdx === -1) throw new Error('CSV must have "user" and "task" headers');
+    const nameIdx = header.indexOf('name');
+    if (nameIdx === -1) throw new Error('CSV must have a "name" header');
+
+    // All columns except "name" are task columns (supports any number of task columns)
+    const taskIdxs = header
+        .map((h, i) => ({ h, i }))
+        .filter(({ i }) => i !== nameIdx)
+        .map(({ i }) => i);
 
     const rows = [];
     for (let i = 1; i < lines.length; i++) {
         const line = lines[i].trim();
         if (!line) continue;
         const cols = line.split(',').map(c => c.trim());
-        const user = cols[userIdx];
-        const task = cols[taskIdx];
-        if (user) rows.push({ user, task });
+        const user = cols[nameIdx];
+        if (!user) continue;
+
+        for (const ti of taskIdxs) {
+            const task = cols[ti] || '';
+            if (task) rows.push({ user, task });
+        }
     }
     return rows;
 }

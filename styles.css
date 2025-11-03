@@ -1,10 +1,196 @@
+:root {
+    --bg: #0f1115;
+    --card: #151923;
+    --text: #e8eaf1;
+    --muted: #a7afc0;
+    --accent: #5b8cff;
+    --accent-2: #8b5bff;
+    --border: #2a3040;
+    --shadow: 0 10px 25px rgba(0,0,0,0.35);
+    --radius: 14px;
+    --radius-sm: 10px;
+    --space-1: 8px;
+    --space-2: 12px;
+    --space-3: 16px;
+    --space-4: 20px;
+    --space-5: 28px;
+    --space-6: 36px;
+    --tap: 52px;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --text: #0f1115;
+        --muted: #5b6374;
+        --border: #e7eaf1;
+        --shadow: 0 8px 24px rgba(15,17,21,0.08);
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 2em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(91,140,255,0.18), transparent 60%),
+                radial-gradient(900px 500px at 110% 10%, rgba(139,91,255,0.18), transparent 60%),
+                var(--bg);
+    color: var(--text);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
+
+.app {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--space-5) var(--space-3) var(--space-6);
+}
+
+.card {
+    background: color-mix(in oklab, var(--card) 92%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: var(--space-5);
+    backdrop-filter: saturate(120%) blur(6px);
+    -webkit-backdrop-filter: saturate(120%) blur(6px);
+    animation: fadeIn 320ms ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 1.375rem;
+    line-height: 1.2;
+    margin: 0 0 var(--space-4) 0;
+    letter-spacing: 0.2px;
+}
+
+.field-label {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-bottom: var(--space-2);
+}
+
+/* Select (mobile-first touch target) */
 select {
-    margin-bottom: 1em;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: var(--tap);
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)) padding-box,
+        radial-gradient(8px 8px at calc(100% - 18px) 50%, var(--muted) 99%, transparent 100%) no-repeat;
+    background-position: right var(--space-3) center;
+    background-color: var(--card);
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 80ms ease;
 }
-ul {
-    list-style-type: square;
+
+select:focus {
+    outline: none;
+    border-color: color-mix(in oklab, var(--accent) 65%, var(--border));
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+select:hover {
+    border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+}
+
+/* Task list */
+.tasks {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+}
+
+.tasks li {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: transform 120ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
+    min-height: calc(var(--tap) - 8px);
+}
+
+.tasks li::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent) 70%, var(--accent-2));
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 12%, transparent);
+}
+
+.tasks li:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--accent) 28%, var(--border));
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.tasks li:active {
+    transform: translateY(0px) scale(0.997);
+}
+
+/* Empty / error state styling if used */
+.tasks:empty::before {
+    content: "No tasks to show";
+    display: block;
+    color: var(--muted);
+    padding: var(--space-4);
+    text-align: center;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+}
+
+/* Spacing between controls and list */
+#userSelect + .tasks,
+#userSelect + ul {
+    margin-top: var(--space-4);
+}
+
+/* Larger screens */
+@media (min-width: 640px) {
+    .card {
+        padding: var(--space-6);
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
 }

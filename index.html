@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Task Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Select a User</h1>
-    <select id="userSelect">
-        <option value="">--Choose a user--</option>
-    </select>
-    <ul id="taskList"></ul>
+    <main class="app">
+        <section class="card">
+            <h1>Tasks</h1>
+            <label class="field-label" for="userSelect">Select a user</label>
+            <select id="userSelect" aria-label="Select user">
+                <option value="">--Choose a user--</option>
+            </select>
+            <ul id="taskList" class="tasks"></ul>
+        </section>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

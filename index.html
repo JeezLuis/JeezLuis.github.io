@@ -10,10 +10,9 @@
     <main class="app">
         <section class="card">
             <h1>Tasks</h1>
-            <label class="field-label" for="userSelect">Select a user</label>
-            <select id="userSelect" aria-label="Select user">
-                <option value="">--Choose a user--</option>
-            </select>
+            <label class="field-label" for="userInput">Select a user</label>
+            <input id="userInput" list="userList" type="text" placeholder="Start typing a name…" aria-label="Select user" autocomplete="off">
+            <datalist id="userList"></datalist>
             <ul id="taskList" class="tasks"></ul>
         </section>
     </main>

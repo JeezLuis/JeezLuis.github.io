@@ -17,7 +17,6 @@ function parseCSV(text) {
     for (let i = 1; i < lines.length; i++) {
         const line = lines[i].trim();
         if (!line) continue;
-        // Basic CSV split (no quoted fields). If you need quotes/commas in fields, consider a CSV lib.
         const cols = line.split(',').map(c => c.trim());
         const user = cols[userIdx];
         const task = cols[taskIdx];
@@ -35,14 +34,16 @@ function groupTasksByUser(rows) {
     return map;
 }
 
-function populateUsers(selectEl, users) {
-    // Clear existing (keep placeholder)
-    selectEl.querySelectorAll('option:not([value=""])').forEach(opt => opt.remove());
+function capitalize(s) {
+    return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+}
+
+function populateUserDatalist(datalistEl, users) {
+    datalistEl.innerHTML = '';
     Array.from(users).sort((a, b) => a.localeCompare(b)).forEach(user => {
         const opt = document.createElement('option');
-        opt.value = user;
-        opt.textContent = user.charAt(0).toUpperCase() + user.slice(1);
-        selectEl.appendChild(opt);
+        opt.value = capitalize(user);
+        datalistEl.appendChild(opt);
     });
 }
 
@@ -55,21 +56,37 @@ function renderTasks(listEl, tasks) {
     });
 }
 
-const userSelect = document.getElementById('userSelect');
+const userInput = document.getElementById('userInput');
+const userList = document.getElementById('userList');
 const taskList = document.getElementById('taskList');
 
 let tasksByUser = new Map();
+let lowerToKey = new Map();
 
-userSelect.addEventListener('change', function() {
-    const selectedUser = userSelect.value;
-    renderTasks(taskList, tasksByUser.get(selectedUser));
-});
+function updateFromInput() {
+    const val = (userInput.value || '').trim().toLowerCase();
+    const key = lowerToKey.get(val);
+    if (key) {
+        renderTasks(taskList, tasksByUser.get(key));
+    } else {
+        taskList.innerHTML = '';
+    }
+}
+
+userInput.addEventListener('input', updateFromInput);
+userInput.addEventListener('change', updateFromInput);
 
 (async function init() {
     try {
         const rows = await loadCSV('tasks.csv');
         tasksByUser = groupTasksByUser(rows);
-        populateUsers(userSelect, tasksByUser.keys());
+        populateUserDatalist(userList, tasksByUser.keys());
+        // Build case-insensitive lookup from displayed (capitalized) values and raw keys
+        lowerToKey = new Map();
+        for (const key of tasksByUser.keys()) {
+            lowerToKey.set(key.toLowerCase(), key);
+            lowerToKey.set(capitalize(key).toLowerCase(), key);
+        }
     } catch (err) {
         console.error(err);
         renderTasks(taskList, [`Error: ${err.message}`]);

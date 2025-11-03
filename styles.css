@@ -194,3 +194,34 @@ select:hover {
         transition: none !important;
     }
 }
+
+/* Add below your existing select styles */
+input[list], input[type="text"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: var(--tap, 52px);
+    padding: 0 var(--space-4, 20px);
+    border-radius: var(--radius-sm, 10px);
+    border: 1px solid var(--border, #2a3040);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    background-color: var(--card, #151923);
+    color: var(--text, #e8eaf1);
+    font-size: 1rem;
+    line-height: 1;
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 80ms ease;
+}
+input[list]:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: color-mix(in oklab, var(--accent, #5b8cff) 65%, var(--border, #2a3040));
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent, #5b8cff) 18%, transparent);
+}
+input[list]:hover, input[type="text"]:hover {
+    border-color: color-mix(in oklab, var(--accent, #5b8cff) 35%, var(--border, #2a3040));
+}
+
+/* Spacing between input and list */
+#userInput + .tasks,
+#userInput + ul {
+    margin-top: var(--space-4, 20px);
+}

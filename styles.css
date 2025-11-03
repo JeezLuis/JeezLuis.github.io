@@ -1,0 +1,10 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 2em;
+}
+select {
+    margin-bottom: 1em;
+}
+ul {
+    list-style-type: square;
+}

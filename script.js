@@ -35,6 +35,52 @@ function parseCSV(text) {
     return rows;
 }
 
+function parseDescriptionsCSV(text) {
+    const lines = text.trim().split(/\r?\n/);
+    if (lines.length === 0) return new Map();
+    
+    const header = lines[0].split(',').map(h => h.trim());
+    const tareaIdx = header.findIndex(h => h.toLowerCase() === 'tarea');
+    const detalleIdx = header.findIndex(h => h.toLowerCase() === 'detalle');
+    const diaIdx = header.findIndex(h => h.toLowerCase() === 'dia');
+    
+    if (tareaIdx === -1 || detalleIdx === -1 || diaIdx === -1) {
+        throw new Error('descriptions.csv must have "Tarea", "Detalle", and "Dia" columns');
+    }
+    
+    const map = new Map();
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        
+        // Handle CSV with quoted fields that may contain commas
+        const cols = [];
+        let current = '';
+        let inQuotes = false;
+        for (let j = 0; j < line.length; j++) {
+            const char = line[j];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                cols.push(current.trim());
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        cols.push(current.trim()); // Last column
+        
+        const tarea = cols[tareaIdx] || '';
+        const detalle = cols[detalleIdx] || '';
+        const dia = cols[diaIdx] || '';
+        
+        if (tarea) {
+            map.set(tarea, { detalle, dia });
+        }
+    }
+    return map;
+}
+
 function groupTasksByUser(rows) {
     const map = new Map();
     rows.forEach(({ user, task }) => {
@@ -57,13 +103,50 @@ function populateUserDatalist(datalistEl, users) {
     });
 }
 
-function renderTasks(listEl, tasks) {
+function renderTasks(listEl, tasks, descriptionsMap) {
     listEl.innerHTML = '';
     (tasks || []).forEach(task => {
         const li = document.createElement('li');
         li.textContent = task;
+        li.setAttribute('role', 'button');
+        li.setAttribute('tabindex', '0');
+        li.classList.add('task-item');
+        
+        // Add click/tap handler
+        li.addEventListener('click', () => showTaskDetails(task, descriptionsMap));
+        li.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                showTaskDetails(task, descriptionsMap);
+            }
+        });
+        
         listEl.appendChild(li);
     });
+}
+
+function showTaskDetails(taskName, descriptionsMap) {
+    const modal = document.getElementById('modalOverlay');
+    const taskNameEl = document.getElementById('modalTaskName');
+    const timeEl = document.getElementById('modalTime');
+    const descEl = document.getElementById('modalDescription');
+    
+    const details = descriptionsMap.get(taskName);
+    
+    taskNameEl.textContent = taskName;
+    timeEl.textContent = details ? details.dia : 'Tiempo no especificado';
+    descEl.textContent = details ? details.detalle : 'Descripción no disponible';
+    
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    const modal = document.getElementById('modalOverlay');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 const userInput = document.getElementById('userInput');
@@ -72,12 +155,13 @@ const taskList = document.getElementById('taskList');
 
 let tasksByUser = new Map();
 let lowerToKey = new Map();
+let descriptionsMap = new Map();
 
 function updateFromInput() {
     const val = (userInput.value || '').trim().toLowerCase();
     const key = lowerToKey.get(val);
     if (key) {
-        renderTasks(taskList, tasksByUser.get(key));
+        renderTasks(taskList, tasksByUser.get(key), descriptionsMap);
     } else {
         taskList.innerHTML = '';
     }
@@ -86,10 +170,31 @@ function updateFromInput() {
 userInput.addEventListener('input', updateFromInput);
 userInput.addEventListener('change', updateFromInput);
 
+// Modal close handlers
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose = document.querySelector('.modal-close');
+
+modalClose.addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+        closeModal();
+    }
+});
+
 (async function init() {
     try {
-        const rows = await loadCSV('tasks.csv');
-        tasksByUser = groupTasksByUser(rows);
+        // Load both CSVs in parallel
+        const [tasksRows, descriptionsText] = await Promise.all([
+            loadCSV('tasks.csv'),
+            fetch('descriptions.csv', { cache: 'no-store' }).then(r => r.ok ? r.text() : Promise.reject(new Error('Failed to load descriptions.csv')))
+        ]);
+        
+        tasksByUser = groupTasksByUser(tasksRows);
+        descriptionsMap = parseDescriptionsCSV(descriptionsText);
+        
         populateUserDatalist(userList, tasksByUser.keys());
         // Build case-insensitive lookup from displayed (capitalized) values and raw keys
         lowerToKey = new Map();
@@ -98,7 +203,7 @@ userInput.addEventListener('change', updateFromInput);
             lowerToKey.set(capitalize(key).toLowerCase(), key);
         }
     } catch (err) {
-        console.error(err);
-        renderTasks(taskList, [`Error: ${err.message}`]);
+        console.error('Error loading data:', err);
+        renderTasks(taskList, [`Error: ${err.message}`], new Map());
     }
 })();

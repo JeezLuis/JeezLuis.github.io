@@ -16,6 +16,17 @@
             <ul id="taskList" class="tasks"></ul>
         </section>
     </main>
+    
+    <!-- Modal overlay -->
+    <div id="modalOverlay" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="modalTaskName" class="modal-title"></h2>
+            <div class="modal-time" id="modalTime"></div>
+            <div class="modal-description" id="modalDescription"></div>
+        </div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
